@@ -1,0 +1,26 @@
+
+
+{% extends "food_counter/base.html" %}
+{% block content %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+<h1>Meal List!</h1>
+<form method="GET" action="{% url 'meal-list' %}">
+  {{ form|crispy }}
+  <button type="submit">Search</button>
+</form>
+    {% for meal in meals %}
+        <article class="media content-section">
+          <div class="media-body">
+            <h2> {{ meal.meal_name }}</h2> <h3>{{ meal.calories }} kcal</h3>
+            <p class="article-content"> P: {{ meal.protein }} F: {{ meal.fat }} C: {{ meal.carbs }}</p>
+              <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'meal-update' meal.id %}">Update</a>
+              <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'meal-delete' meal.id %}">Delete</a>
+            <p>Added by {{ meal.user }} - usuniemy to żeby nie było widać kto dodał</p>
+          </div>
+        </article>
+    {% endfor %}
+
+{% endblock content %}
+
+

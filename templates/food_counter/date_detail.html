@@ -1,0 +1,35 @@
+
+
+{% extends "food_counter/base.html" %}
+{% block content %}
+<h1>Calorie Counter Home!</h1>
+
+
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">{{ date.date }}</a>
+            </div>
+            <h2 class="article-title">{{ date.total_calories }} kcal</h2>
+            <h2 class="article-content"> P: {{ date.total_protein }} F: {{ date.total_fat }} C: {{ date.total_carbs }}</h2>
+              <h3>Meals:</h3>
+                {% for meal in date.meals.all %} <!-- pętla po posiłkach -->
+                  <h4> <!-- zaczynamy tag h4 -->
+                    {{ meal.meal_name }} - {{ meal.calories }} kcal P: {{ meal.protein }} F: {{ meal.fat }} C: {{ meal.carbs }}
+                  </h4> <!-- kończymy tag h4 -->
+                {% endfor %}
+            {% if object.user == user %}
+              <div>
+                <p>{{ date.user }}</p>
+                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'date-update' object.id %}">Update</a>
+                <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'date-delete' object.id %}">Delete</a>
+              </div>
+        {% endif %}
+
+          </div>
+        </article>
+
+
+{% endblock content %}
+
+

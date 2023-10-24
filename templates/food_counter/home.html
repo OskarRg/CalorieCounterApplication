@@ -1,0 +1,23 @@
+
+
+{% extends "food_counter/base.html" %}
+{% block content %}
+<h1>Calorie Counter Home!</h1>
+
+    {% for date in dates %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">{{ date.date }}</a>
+            </div>
+            <h2><a class="article-title" href="{% url 'date-detail' date.id %}">Calories: {{ date.total_calories }}
+                </a></h2>
+            <p class="article-content"> P: {{ date.total_protein }} F: {{ date.total_fat }} C: {{ date.total_carbs }}</p>
+            <p>{{ date.user }}</p>
+          </div>
+        </article>
+    {% endfor %}
+
+{% endblock content %}
+
+
