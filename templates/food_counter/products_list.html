@@ -1,0 +1,67 @@
+{% extends "food_counter/list_base.html" %}
+{% block content %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+<h1>Products List!</h1>
+<form method="GET" action="{% url 'product-list' %}">
+  {{ form|crispy }}
+    <button class="btn btn-info mb-2 " type="submit">Search</button>
+</form>
+<div class="container">
+  <div class="row">
+    {% for category in categories %}
+      <div class="col-md-4">
+        <div class="accordion" id="categoryAccordion">
+          <h3 class="alert alert-secondary collapsed" data-toggle="collapse" data-target="#category{{ category.id }}" aria-expanded="false">{{ category.name }}</h3>
+          <div id="category{{ category.id }}" class="collapse show">
+            <ul class="list-group">
+              {% for product in products %}
+              {% if product.category.id == category.id %}
+              <li class="list-group-item">
+                <div class="row">
+                  <div class="col-md-12">
+                    <h4>{{ product.product_name }} (100 g)</h4>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <h5>{{ product.calories }} kcal</h5>
+                    <p>
+                      P: <span style="color: blue;">{{ product.protein }}</span>
+                      F: <span style="color: darkorange;">{{ product.fat }}</span>
+                      C: <span style="color: purple;">{{ product.carbs }}</span>
+                    </p>
+                  </div>
+                  <div class="col-md-6">
+                    <canvas id="chart-{{ product.id }}" style="max-width: 100px; max-height: 100px;"></canvas>
+                    <script>
+                      var ctx = document.getElementById("chart-{{ product.id }}").getContext('2d');
+                      var data = {
+                        datasets: [{
+                          data: [{{ product.protein }}, {{ product.fat }}, {{ product.carbs }}],
+                          backgroundColor: ['blue', 'darkorange', 'purple']
+                        }]
+                      };
+                      var myPieChart = new Chart(ctx, {
+                        type: 'pie',
+                        data: data,
+                        options: {
+                          legend: {
+                            display: false, // Wyłącz legendę
+                          }
+                        }
+                      });
+                    </script>
+                  </div>
+                </div>
+              </li>
+              {% endif %}
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock content %}

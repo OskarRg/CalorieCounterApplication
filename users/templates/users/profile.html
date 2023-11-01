@@ -1,18 +1,45 @@
 {% extends "food_counter/base.html" %}
 {% load crispy_forms_tags %}
+{% load crispy_forms_filters %}
 {% block content %}
     <div class="content-section">
       <div class="media">
+
         <img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
+
         <div class="media-body">
           <h2 class="account-heading">{{ user.username }}</h2>
           <p class="text-secondary">{{ user.email }}</p>
           <p class="text-secondary">Height: {% if user.profile.height is not Null%}{{ user.profile.height }} {% else %}--- {% endif %} </p>
           <p class="text-secondary">Weight: {% if user.profile.weight is not Null%}{{ user.profile.weight }} {% else %}--- {% endif %}</p>
+
+
         </div>
+       <div class="text-right">
+           <a href="{% url 'password_change' %}" class="btn btn-outline-warning">Change Password</a>
+           <h2></h2> <!-- Only for good alignment - i can't html :D -->
+           <a href="{% url 'password_change' %}" class="btn btn-outline-secondary">Change Image</a>
+       </div>
+
+
+
+
       </div>
       <!-- FORM HERE -->
     </div>
 
+    <div class="content-section">
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Change Your Measurements</legend>
+                {{ form|crispy }}
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Update</button>
+            </div>
+        </form>
+
+    </div>
 
 {% endblock content %}

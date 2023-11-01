@@ -33,10 +33,12 @@ ALLOWED_HOSTS = []
 
 
 INSTALLED_APPS = [
+
     'users.apps.UsersConfig',
     'food_counter.apps.FoodCounterConfig',
     'crispy_forms',
     'crispy_bootstrap4',
+    'django_filters',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -83,7 +85,7 @@ WSGI_APPLICATION = 'CalorieCounter.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': BASE_DIR / 'db_test.sqlite3',
     }
 }
 

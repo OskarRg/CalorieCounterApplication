@@ -1,23 +1,76 @@
-
-
 {% extends "food_counter/base.html" %}
 {% block content %}
 <h1>Calorie Counter Home!</h1>
 
+<div class="row">
     {% for date in dates %}
-        <article class="media content-section">
-          <div class="media-body">
-            <div class="article-metadata">
-              <a class="mr-2" href="#">{{ date.date }}</a>
-            </div>
-            <h2><a class="article-title" href="{% url 'date-detail' date.id %}">Calories: {{ date.total_calories }}
-                </a></h2>
-            <p class="article-content"> P: {{ date.total_protein }} F: {{ date.total_fat }} C: {{ date.total_carbs }}</p>
-            <p>{{ date.user }}</p>
-          </div>
-        </article>
+        <div class="col-md-4">
+            <article class="media content-section">
+                <div class="media-body">
+                    <div class="article-metadata">
+                        <a class="mr-2" href="{% url 'date-detail' date.id %}">{{ date.date }}</a>
+                    </div>
+                    <h2><a class="article-title" href="{% url 'date-detail' date.id %}">Calories: {{ date.total_calories|floatformat:0 }}
+                    </a></h2>
+                    <div>
+                    <div class="col-md-6">
+                        <p>
+                            P: <span style="color: blue;">{{ date.total_protein|floatformat:0 }}</span>
+                            F: <span style="color: darkorange;">{{ date.total_fat|floatformat:0 }}</span>
+                            C: <span style="color: purple;">{{ date.total_carbs|floatformat:0 }}</span>
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <canvas id="chart-{{ date.id }}" style="max-width: 100px; max-height: 100px;"></canvas>
+                        <script>
+                          var ctx = document.getElementById("chart-{{ date.id }}").getContext('2d');
+                          var data = {
+
+                            datasets: [{
+                              data: [{{ date.total_protein }}, {{ date.total_fat }}, {{ date.total_carbs }}],
+                              backgroundColor: ['blue', 'darkorange', 'purple']
+                            }]
+                          };
+                          var myPieChart = new Chart(ctx, {
+                            type: 'pie',
+                            data: data,
+                            options: {
+                              legend: {
+                                display: false, // Wyłącz legendę
+                              }
+                            }
+                          });
+                        </script>
+                    </div>
+                    </div>
+                </div>
+            </article>
+        </div>
     {% endfor %}
+</div>
+
+{% if is_paginated %}
+    <div class="row">
+        <div class="col-md-12">
+            {% if page_obj.has_previous %}
+                <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+                <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                    <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                    <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+                {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+                <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+                <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+            {% endif %}
+        </div>
+    </div>
+{% endif %}
 
 {% endblock content %}
-
-

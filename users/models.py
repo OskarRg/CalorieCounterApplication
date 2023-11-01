@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 import PIL
+from django.urls import reverse
 
 
 # Create your models here.
@@ -14,3 +15,6 @@ class Profile(models.Model):
 
     def __str__(self):
         return f'{self.user.username} Profile'
+
+    def get_absolute_url(self):
+        return reverse('profile')

@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .views import (DateListView, DateDetailView,
                     DateCreateView, DateUpdateView, MealCreateView, DateDeleteView,
-                    MealListView, MealUpdateView, MealDeleteView
+                    MealListView, MealUpdateView, MealDeleteView ,ProductCreateView, ProductUpdateView, ProductsListView
                     )
 
 from django.urls import path
@@ -17,6 +17,8 @@ urlpatterns = [
     path('meal/<int:pk>/update/', MealUpdateView.as_view(), name='meal-update'),
     path('meal/<int:pk>/delete/', MealDeleteView.as_view(), name='meal-delete'),
     path('meal/list/', MealListView.as_view(), name='meal-list'),
+    path('product/new/', ProductCreateView.as_view(), name='product-create'),
+    path('product/list/', ProductsListView.as_view(), name='product-list'),
     path('about/', views.about, name='food_counter-about'),
 ]
 

@@ -6,13 +6,13 @@
         <form method="POST">
             {% csrf_token %}
             <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Choose one of your meals</legend>
+                <legend class="border-bottom mb-4">Add Another Product</legend>
                 {{ form|crispy }}
             </fieldset>
             <div class="form-group">
                 <button class="btn btn-outline-info" type="submit">Add</button>
             </div>
         </form>
+
     </div>
-    <a class="btn btn-secondary" href={% url 'meal-create' %}>Add new Meal</a>
 {% endblock content %}
