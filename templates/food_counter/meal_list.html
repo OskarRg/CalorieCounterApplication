@@ -20,20 +20,22 @@
                   <li class="list-group-item">
                     <div class="row">
                       <div class="col-md-12">
-                        <h2>{{ meal.meal_name }}</h2>
-                        <h3>{{ meal.calories|floatformat:0 }} kcal</h3>
+                        <h4>{{ meal.meal_name }}</h4>
+                        <h5>{{ meal.grams }} g</h5>
                       </div>
                     </div>
                     <div class="row">
-                      <div class="col-md-6">
-                        <h5>{{ meal.calories }} kcal</h5>
+                      <div class="col-md-7">
+                        <h4>{{ meal.calories|floatformat:0 }} kcal</h4>
                         <p>
                           P: <span style="color: blue;">{{ meal.protein|floatformat:1 }}</span>
                           F: <span style="color: darkorange;">{{ meal.fat|floatformat:1 }}</span>
                           C: <span style="color: purple;">{{ meal.carbs|floatformat:1 }}</span>
                         </p>
+                          <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'meal-update' meal.id %}">Update</a>
+                          <a class="btn btn-danger btn-sm mt-1 mb-1"  href="{% url 'meal-delete' meal.id %}">Delete</a>
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-md-5">
                         <canvas id="chart-{{ meal.id }}" style="max-width: 100px; max-height: 100px;"></canvas>
                         <script>
                           var ctx = document.getElementById("chart-{{ meal.id }}").getContext('2d');

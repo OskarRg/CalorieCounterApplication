@@ -49,12 +49,3 @@ class PasswordChangeForm(forms.Form):
         new_password = self.cleaned_data['new_password1']
         self.user.set_password(new_password)
         self.user.save()
-
-"""
-class DateForm(forms.ModelForm):
-    class Meta:
-        model = Date
-        fields = ["date"]
-        widgets = {
-            "date": DatePickerInput()
-        }"""

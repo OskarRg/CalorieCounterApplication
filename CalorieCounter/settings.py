@@ -31,14 +31,12 @@ ALLOWED_HOSTS = []
 # Application definition
 
 
-
 INSTALLED_APPS = [
 
     'users.apps.UsersConfig',
     'food_counter.apps.FoodCounterConfig',
     'crispy_forms',
     'crispy_bootstrap4',
-    'django_filters',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -62,8 +60,7 @@ ROOT_URLCONF = 'CalorieCounter.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
-        ,
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

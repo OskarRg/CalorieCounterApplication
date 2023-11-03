@@ -1,36 +1,27 @@
 from django import forms
-# from bootstrap_datepicker_plus.widgets import DatePickerInput
-from food_counter.models import Date
-from .widgets import MealCheckboxSelectMultiple # Importujemy nasz widget
-from django import forms
 from .models import Date, Meal, Products, Category
 
 
 class DateForm(forms.ModelForm):
-    # pole meals typu ModelChoiceField, które pozwala na wybór jednego posiłku z modelu Meal
     meals = forms.ModelMultipleChoiceField(queryset=Meal.objects.all(), required=False, widget=forms.CheckboxSelectMultiple)
 
     class Meta:
-        model = Date  # model, który chcemy zaktualizować
-        fields = ["meals"]  # pole, które chcemy zmienić w formularzu
+        model = Date
+        fields = ["meals"]
 
     def __init__(self, user, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Ustawiamy queryset meals na posiłki należące do użytkownika i sortujemy je według nazwy rosnąco i kategorii malejąco
-        self.fields['meals'].queryset = Meal.objects.filter(user=user).order_by('category', 'meal_name')
+        self.fields['meals'].queryset = Meal.objects.filter(user=user).order_by('meal_name')
         self.fields['meals'].initial = [meal.id for meal in self.instance.meals.all()]
 
 
 class MealForm(forms.ModelForm):
-    # pole meals typu ModelMultipleChoiceField, które pozwala na wybór wielu posiłków z modelu Meal
-    # meals = forms.ModelMultipleChoiceField(queryset=Meal.objects.all())
-
-    products = forms.ModelMultipleChoiceField(queryset=Products.objects.all().order_by('product_name'), required=False, widget=forms.CheckboxSelectMultiple)
+    product = forms.ModelChoiceField(queryset=Products.objects.all().order_by('product_name'), required=True, widget=forms.Select)
     category = forms.ModelChoiceField(queryset=Category.objects.all(), required=False, widget=forms.Select)
 
     class Meta:
-        model = Meal  # model, który chcemy zaktualizować
-        fields = ["meal_name", "products", 'grams', 'category']  # pole, które chcemy zmienić w formularzu
+        model = Meal
+        fields = ["meal_name", "product", 'grams', 'category']
 
 
 class MealSearchForm(forms.ModelForm):
@@ -47,14 +38,3 @@ class ProductsSearchForm(forms.ModelForm):
     class Meta:
         model = Products
         fields = ['product_name']
-
-
-
-"""
-class DateForm(forms.ModelForm):
-    class Meta:
-        model = Date
-        fields = ["date"]
-        widgets = {
-            "date": DatePickerInput()
-        }"""

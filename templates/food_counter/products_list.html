@@ -24,15 +24,16 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-md-6">
+                  <div class="col-md-7">
                     <h5>{{ product.calories }} kcal</h5>
                     <p>
                       P: <span style="color: blue;">{{ product.protein }}</span>
                       F: <span style="color: darkorange;">{{ product.fat }}</span>
                       C: <span style="color: purple;">{{ product.carbs }}</span>
                     </p>
+
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-md-5">
                     <canvas id="chart-{{ product.id }}" style="max-width: 100px; max-height: 100px;"></canvas>
                     <script>
                       var ctx = document.getElementById("chart-{{ product.id }}").getContext('2d');

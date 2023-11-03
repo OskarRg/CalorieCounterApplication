@@ -1,9 +1,5 @@
-
-
 {% extends "food_counter/base.html" %}
 {% block content %}
-<h1>Calorie Counter Home!</h1>
-
 
         <article class="media content-section">
           <div class="media-body">
@@ -13,10 +9,10 @@
             <h2 class="article-title">{{ date.total_calories|floatformat:0 }} kcal</h2>
             <h2 class="article-content"> P: {{ date.total_protein|floatformat:1 }} F: {{ date.total_fat|floatformat:1 }} C: {{ date.total_carbs|floatformat:1 }}</h2>
               <h3>Meals:</h3>
-                {% for meal in date.meals.all %} <!-- pętla po posiłkach -->
-                  <h4> <!-- zaczynamy tag h4 -->
+                {% for meal in date.meals.all %}
+                  <h4>
                     {{ meal.meal_name }} - {{ meal.calories|floatformat:0 }} kcal P: {{ meal.protein|floatformat:1 }} F: {{ meal.fat|floatformat:1 }} C: {{ meal.carbs|floatformat:1 }}
-                  </h4> <!-- kończymy tag h4 -->
+                  </h4>
                 {% endfor %}
             {% if object.user == user %}
               <div>
