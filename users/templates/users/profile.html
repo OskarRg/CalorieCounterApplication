@@ -12,18 +12,12 @@
           <p class="text-secondary">{{ user.email }}</p>
           <p class="text-secondary">Height: {% if user.profile.height is not Null%}{{ user.profile.height }} {% else %}--- {% endif %} </p>
           <p class="text-secondary">Weight: {% if user.profile.weight is not Null%}{{ user.profile.weight }} {% else %}--- {% endif %}</p>
-
-
         </div>
        <div class="text-right">
-           <a href="{% url 'password_change' %}" class="btn btn-outline-warning">Change Password</a>
+           <a href="{% url 'password_change' %}" class="btn btn-outline-warning brown_button_white_bg">Change Password</a>
            <h2></h2> <!-- Only for good alignment - i can't html -->
-           <a href="{% url 'password_change' %}" class="btn btn-outline-secondary">Change Image</a>
+           <a href="{% url 'password_change' %}" class="btn btn-outline-secondary brown_button_white_bg">Change Image</a>
        </div>
-
-
-
-
       </div>
     </div>
 
@@ -35,10 +29,9 @@
                 {{ form|crispy }}
             </fieldset>
             <div class="form-group">
-                <button class="btn btn-outline-info" type="submit">Update</button>
+                <button class="btn btn-outline-info brown_button_white_bg" type="submit">Update</button>
             </div>
         </form>
-
     </div>
 
 {% endblock content %}

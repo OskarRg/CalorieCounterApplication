@@ -1,4 +1,5 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .models import Meal, Date, Products, Category
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
@@ -168,7 +169,7 @@ class MealDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 class DateDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Date
     success_url = '/'
-    template_name = "food_counter/meal_confirm_delete.html"
+    template_name = "food_counter/date_confirm_delete.html"
 
     def test_func(self):
         date = self.get_object()

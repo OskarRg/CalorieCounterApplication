@@ -2,10 +2,20 @@
 {% block content %}
 {% load crispy_forms_filters %}
 {% load crispy_forms_tags %}
-<h1>Meal List!</h1>
+<div class="container">
+  <div class="row justify-content-center mt-3"> <!-- Zmniejszono margines z mt-5 na mt-3 -->
+    <div class="col-md-6">
+      <div class="bg-transparent text-center" > <!-- Dodano styl obramowania -->
+        <div class="card-body">
+          <h1 style="background: rgba(255, 255, 255, 0.55);" >Meal List!</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <form method="GET" action="{% url 'meal-list' %}">
   {{ form|crispy }}
-  <button class="btn btn-info mb-2 " type="submit">Search</button>
+  <button class="btn btn-info mb-2 brown_button" type="submit">Search</button>
 </form>
 <div class="container">
   <div class="row">
@@ -32,27 +42,31 @@
                           F: <span style="color: darkorange;">{{ meal.fat|floatformat:1 }}</span>
                           C: <span style="color: purple;">{{ meal.carbs|floatformat:1 }}</span>
                         </p>
-                          <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'meal-update' meal.id %}">Update</a>
-                          <a class="btn btn-danger btn-sm mt-1 mb-1"  href="{% url 'meal-delete' meal.id %}">Delete</a>
+                        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'meal-update' meal.id %}">Update</a>
+                        <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'meal-delete' meal.id %}">Delete</a>
                       </div>
                       <div class="col-md-5">
                         <canvas id="chart-{{ meal.id }}" style="max-width: 100px; max-height: 100px;"></canvas>
                         <script>
                           var ctx = document.getElementById("chart-{{ meal.id }}").getContext('2d');
                           var data = {
+                            labels: ['Protein', 'Fat', 'Carbs'],
                             datasets: [{
                               data: [{{ meal.protein }}, {{ meal.fat }}, {{ meal.carbs }}],
-                              backgroundColor: ['blue', 'darkorange', 'purple']
+                              backgroundColor: ['blue', 'darkorange', 'purple'],
                             }]
+                          };
+                          var options = {
+                            plugins: {
+                              legend: {
+                                display: false
+                              }
+                            }
                           };
                           var myPieChart = new Chart(ctx, {
                             type: 'pie',
                             data: data,
-                            options: {
-                              legend: {
-                                display: false, // Wyłącz legendę
-                              }
-                            }
+                            options: options
                           });
                         </script>
                       </div>

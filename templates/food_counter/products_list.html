@@ -2,10 +2,20 @@
 {% block content %}
 {% load crispy_forms_filters %}
 {% load crispy_forms_tags %}
-<h1>Products List!</h1>
+<div class="container">
+  <div class="row justify-content-center mt-3">
+    <div class="col-md-6">
+      <div class="bg-transparent text-center" >
+        <div class="card-body">
+          <h1 style="background: rgba(255, 255, 255, 0.55);" >Product List!</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <form method="GET" action="{% url 'product-list' %}">
   {{ form|crispy }}
-    <button class="btn btn-info mb-2 " type="submit">Search</button>
+  <button class="btn btn-info mb-2 brown_button" type="submit">Search</button>
 </form>
 <div class="container">
   <div class="row">
@@ -31,7 +41,6 @@
                       F: <span style="color: darkorange;">{{ product.fat }}</span>
                       C: <span style="color: purple;">{{ product.carbs }}</span>
                     </p>
-
                   </div>
                   <div class="col-md-5">
                     <canvas id="chart-{{ product.id }}" style="max-width: 100px; max-height: 100px;"></canvas>
