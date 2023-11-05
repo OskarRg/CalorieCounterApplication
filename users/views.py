@@ -1,7 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .forms import UserRegisterForm, ProfileUpdateForm, PasswordChangeForm
+from django.contrib.auth.models import User
+from .forms import UserRegisterForm, ProfileUpdateForm, PasswordChangeForm, DeactivateUserForm, ProfileImageUpdateForm
+from .models import Profile
 
 
 def register(request):
@@ -42,3 +45,35 @@ def password_change(request):
     else:
         form = PasswordChangeForm(request.user)
     return render(request, 'users/password_change.html', {'form': form})
+
+
+@login_required()
+def deactivate_account(request):
+    if request.method == 'POST':
+        form = DeactivateUserForm(request.POST)
+        if form.is_valid():
+            password = form.cleaned_data['password']
+            user = request.user
+            if user.check_password(password):
+                profile = Profile.objects.get(user=user)
+                profile.deactivate_user()
+                logout(request)
+                return redirect('food_counter-home')  # Możesz ustawić inny adres po deaktywacji konta
+            else:
+                form.add_error('password', 'Incorrect password')
+    else:
+        form = DeactivateUserForm()
+
+    return render(request, 'users/deactivate_account.html', {'form': form})
+
+
+@login_required
+def change_profile_image(request):
+    if request.method == 'POST':
+        form = ProfileImageUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
+    else:
+        form = ProfileImageUpdateForm(instance=request.user.profile)
+    return render(request, 'users/change_profile_image.html', {'form': form})

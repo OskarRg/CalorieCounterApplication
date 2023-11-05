@@ -5,7 +5,7 @@
     <div class="content-section">
       <div class="media">
 
-        <img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
+        <img class="rounded-circle account-img" alt="user's profile picture" src="{{ user.profile.image.url }}">
 
         <div class="media-body">
           <h2 class="account-heading">{{ user.username }}</h2>
@@ -16,7 +16,7 @@
        <div class="text-right">
            <a href="{% url 'password_change' %}" class="btn btn-outline-warning brown_button_white_bg">Change Password</a>
            <h2></h2> <!-- Only for good alignment - i can't html -->
-           <a href="{% url 'password_change' %}" class="btn btn-outline-secondary brown_button_white_bg">Change Image</a>
+           <a href="{% url 'change-profile-image' %}" class="btn btn-outline-secondary brown_button_white_bg">Change Image</a>
        </div>
       </div>
     </div>
@@ -34,4 +34,7 @@
         </form>
     </div>
 
+    <div class="form-group">
+        <a href="{% url 'deactivate-account' %}" class="btn btn-outline-danger brown_button">Deactivate Account</a>
+    </div>
 {% endblock content %}

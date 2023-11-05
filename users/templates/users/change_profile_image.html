@@ -1,0 +1,16 @@
+{% extends "food_counter/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="content-section">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Change Your Profile Image</legend>
+                {{ form|crispy }}
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-secondary brown_button_white_bg" type="submit">Change Image</button>
+            </div>
+        </form>
+    </div>
+{% endblock content %}

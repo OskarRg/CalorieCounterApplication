@@ -15,3 +15,7 @@ class Profile(models.Model):
 
     def get_absolute_url(self):
         return reverse('profile')
+
+    def deactivate_user(self):
+        self.user.is_active = False
+        self.user.save()

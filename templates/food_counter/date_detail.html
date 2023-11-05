@@ -34,17 +34,17 @@
                 <div class="col-md-6">
                   <h4>{{ meal.meal_name }}</h4>
                   <h5>{{ meal.grams }} g</h5>
-                <div class="row">
-                <div class="col-md-8">
-                  <h4>{{ meal.calories|floatformat:0 }} kcal</h4>
-                  <p>
-                    P: <span style="color: blue;">{{ date.total_protein|floatformat:0 }}</span>
-                    F: <span style="color: darkorange;">{{ date.total_fat|floatformat:0 }}</span>
-                    C: <span style="color: purple;">{{ date.total_carbs|floatformat:0 }}</span>
-                  </p>
-                </div>
+                  <div class="row">
+                    <div class="col-md-8">
+                      <h4>{{ meal.calories|floatformat:0 }} kcal</h4>
+                      <p>
+                        P: <span style="color: blue;">{{ date.total_protein|floatformat:0 }}</span>
+                        F: <span style="color: darkorange;">{{ date.total_fat|floatformat:0 }}</span>
+                        C: <span style="color: purple;">{{ date.total_carbs|floatformat:0 }}</span>
+                      </p>
+                    </div>
+                  </div>
               </div>
-                </div>
             <div class="col-md-6">
                   <canvas id="chart-{{ meal.id }}" class="mt-n4" style="max-width: 100px; max-height: 100px;"></canvas>
                   <script>
@@ -71,9 +71,7 @@
                   </script>
                 </div>
                 </div>
-
             </li>
-
           {% endfor %}
         </ul>
       </div>
@@ -83,7 +81,6 @@
 
 {% if object.user == user %}
   <div class="text-center">
-    <p>{{ date.user }}</p>
     <a class="btn btn-secondary btn-sm mt-1 mb-1 brown_button" href="{% url 'date-update' object.id %}">Update</a>
     <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'date-delete' object.id %}">Delete</a>
   </div>

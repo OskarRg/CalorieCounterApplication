@@ -49,3 +49,13 @@ class PasswordChangeForm(forms.Form):
         new_password = self.cleaned_data['new_password1']
         self.user.set_password(new_password)
         self.user.save()
+
+
+class DeactivateUserForm(forms.Form):
+    password = forms.CharField(widget=forms.PasswordInput, label='Enter your password to deactivate your account')
+
+
+class ProfileImageUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['image']

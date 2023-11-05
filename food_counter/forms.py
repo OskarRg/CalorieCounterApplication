@@ -25,7 +25,7 @@ class MealForm(forms.ModelForm):
 
 
 class MealSearchForm(forms.ModelForm):
-    meal_name = forms.CharField(max_length=100, required=False)
+    meal_name = forms.CharField(max_length=100, required=False, label='')
 
     class Meta:
         model = Meal
@@ -33,7 +33,7 @@ class MealSearchForm(forms.ModelForm):
 
 
 class ProductsSearchForm(forms.ModelForm):
-    product_name = forms.CharField(max_length=100, required=False)
+    product_name = forms.CharField(max_length=100, required=False, label='')
 
     class Meta:
         model = Products
