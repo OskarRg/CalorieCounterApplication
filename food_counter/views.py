@@ -1,11 +1,13 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
+from django.db import IntegrityError
+from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .models import Meal, Date, Products, Category
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .forms import DateForm, MealForm, ProductsSearchForm
+from .forms import DateForm, MealForm, ProductsSearchForm, DateCreateForm
 from .forms import MealSearchForm
-
 
 class DateListView(LoginRequiredMixin, ListView):
     model = Date
@@ -23,11 +25,16 @@ class DateDetailView(LoginRequiredMixin, DetailView):
 
 class DateCreateView(LoginRequiredMixin, CreateView):
     model = Date
-    fields = ["date"]
+    form_class = DateCreateForm
 
     def form_valid(self, form):
         form.instance.user = self.request.user
-        return super().form_valid(form)
+        try:
+            return super().form_valid(form)
+        except IntegrityError:
+            # Dodaj komunikat za pomocą messages.error
+            messages.error(self.request, 'Date needs to be unique & correct')
+            return self.render_to_response(self.get_context_data(form=form))
 
 
 class DateUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):

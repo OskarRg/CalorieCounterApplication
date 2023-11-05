@@ -2,6 +2,15 @@ from django import forms
 from .models import Date, Meal, Products, Category
 
 
+class DateCreateForm(forms.ModelForm):
+    class Meta:
+        model = Date
+        fields = ["date"]
+        widgets = {
+            'date': forms.DateInput(attrs={'type': 'date'})
+        }
+
+
 class DateForm(forms.ModelForm):
     meals = forms.ModelMultipleChoiceField(queryset=Meal.objects.all(), required=False, widget=forms.CheckboxSelectMultiple)
 
