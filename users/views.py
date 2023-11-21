@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.views import LoginView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from .forms import UserRegisterForm, ProfileUpdateForm, PasswordChangeForm, DeactivateUserForm, ProfileImageUpdateForm
+from .forms import UserRegisterForm, ProfileUpdateForm, PasswordChangeForm, DeactivateUserForm, ProfileImageUpdateForm, CustomAuthenticationForm
 from .models import Profile
 
 
@@ -18,6 +19,10 @@ def register(request):
     else:
         form = UserRegisterForm()
     return render(request, 'users/register.html', {'form': form})
+
+
+class CustomLoginView(LoginView):
+    authentication_form = CustomAuthenticationForm
 
 
 @login_required()

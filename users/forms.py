@@ -1,7 +1,16 @@
 from django import forms
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .models import Profile
+
+
+class CustomAuthenticationForm(AuthenticationForm):
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        if username:
+            if not User.objects.filter(username=username).exists():
+                raise forms.ValidationError("You provided bad username or invalid password.")
+        return username
 
 
 class UserRegisterForm(UserCreationForm):

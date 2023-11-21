@@ -14,5 +14,6 @@
             </div>
         </form>
     </div>
-    <a class="btn btn-secondary brown_button" href={% url 'meal-create' %}>Add new Meal</a>
+    <a class="btn btn-secondary brown_button" href={% url 'meal-create' %}?next={{ request.path }}>Add new Meal</a>
+
 {% endblock content %}
