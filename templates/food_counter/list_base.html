@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -15,6 +16,7 @@
     <div class="background-container">
         <img src="{% static 'food_counter/jimmy-dean-Yn0l7uwBrpw-unsplash.jpg' %}" alt="Tło" class="background-image">
     </div>
+
     <header class="site-header">
       <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
         <div class="container">
@@ -47,25 +49,17 @@
         </div>
       </nav>
     </header>
+
     <main role="main" class="container">
       <div class="row">
         <div class="col-md-12">
             {% if messages %}
-              <div class="container mt-3">
-                <div class="row">
-                  <div class="col-md-6 offset-md-3">
-                    {% for message in messages %}
-                      <div class="alert alert-{{ message.tags }} my-custom-alert alert-dismissible fade show">
-                        {{ message }}
-                        <button type="button" class="close" data-dismiss="alert">
-                          <span>&times;</span>
-                        </button>
-                      </div>
-                    {% endfor %}
-                  </div>
-                </div>
+            {% for message in messages %}
+              <div class="alert alert-{{ message.tags }}">
+                {{ message }}
               </div>
-            {% endif %}
+            {% endfor %}
+          {% endif %}
           {% block content %}{% endblock %}
         </div>
 

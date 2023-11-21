@@ -1,35 +1,88 @@
-
-
 {% extends "food_counter/base.html" %}
 {% block content %}
-<h1>Calorie Counter Home!</h1>
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 mx-auto">
+      <div class="card border-primary mb-3">
+        <div class="card-header text-center">
+          <a class="text-primary" href="#">{{ date.date }}</a>
+        </div>
+        <div class="card-body">
+          <h2 class="card-title text-center">{{ date.total_calories|floatformat:0 }} kcal</h2>
+          <h3 class="card-subtitle text-center">
+            Protein: <span style="color: blue;">{{ date.total_protein|floatformat:0 }}</span>
+            Fat: <span style="color: darkorange;">{{ date.total_fat|floatformat:0 }}</span>
+            Carbs: <span style="color: purple;">{{ date.total_carbs|floatformat:0 }}</span>
+          </h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-
-        <article class="media content-section">
-          <div class="media-body">
-            <div class="article-metadata">
-              <a class="mr-2" href="#">{{ date.date }}</a>
-            </div>
-            <h2 class="article-title">{{ date.total_calories }} kcal</h2>
-            <h2 class="article-content"> P: {{ date.total_protein }} F: {{ date.total_fat }} C: {{ date.total_carbs }}</h2>
-              <h3>Meals:</h3>
-                {% for meal in date.meals.all %} <!-- pętla po posiłkach -->
-                  <h4> <!-- zaczynamy tag h4 -->
-                    {{ meal.meal_name }} - {{ meal.calories }} kcal P: {{ meal.protein }} F: {{ meal.fat }} C: {{ meal.carbs }}
-                  </h4> <!-- kończymy tag h4 -->
-                {% endfor %}
-            {% if object.user == user %}
-              <div>
-                <p>{{ date.user }}</p>
-                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'date-update' object.id %}">Update</a>
-                <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'date-delete' object.id %}">Delete</a>
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 mx-auto">
+      <div class="card mb-3">
+        <div class="card-header text-center">
+          Meals
+        </div>
+        <ul class="list-group list-group-flush">
+          {% for meal in date.meals.all %}
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-md-6">
+                  <h4>{{ meal.meal_name }}</h4>
+                  <h5>{{ meal.grams }} g</h5>
+                  <div class="row">
+                    <div class="col-md-8">
+                      <h4>{{ meal.calories|floatformat:0 }} kcal</h4>
+                      <p>
+                        P: <span style="color: blue;">{{ date.total_protein|floatformat:0 }}</span>
+                        F: <span style="color: darkorange;">{{ date.total_fat|floatformat:0 }}</span>
+                        C: <span style="color: purple;">{{ date.total_carbs|floatformat:0 }}</span>
+                      </p>
+                    </div>
+                  </div>
               </div>
-        {% endif %}
+            <div class="col-md-6">
+                  <canvas id="chart-{{ meal.id }}" class="mt-n4" style="max-width: 100px; max-height: 100px;"></canvas>
+                  <script>
+                    var ctx = document.getElementById("chart-{{ meal.id }}").getContext('2d');
+                    var data = {
+                      labels: ['Protein', 'Fat', 'Carbs'],
+                      datasets: [{
+                        data: [{{ meal.protein|floatformat:1 }}, {{ meal.fat|floatformat:1 }}, {{ meal.carbs|floatformat:1 }}],
+                        backgroundColor: ['blue', 'darkorange', 'purple'],
+                      }]
+                    };
+                    var options = {
+                      plugins: {
+                        legend: {
+                          display: false
+                        }
+                      }
+                    };
+                    var myPieChart = new Chart(ctx, {
+                      type: 'pie',
+                      data: data,
+                      options: options
+                    });
+                  </script>
+                </div>
+                </div>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
 
-          </div>
-        </article>
-
-
+{% if object.user == user %}
+  <div class="text-center">
+    <a class="btn btn-secondary btn-sm mt-1 mb-1 brown_button" href="{% url 'date-update' object.id %}">Update</a>
+    <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'date-delete' object.id %}">Delete</a>
+  </div>
+{% endif %}
 {% endblock content %}
-
-

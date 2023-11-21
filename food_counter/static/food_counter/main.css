@@ -13,7 +13,7 @@ ul {
 }
 
 .bg-steel {
-  background-color: #5f788a;
+  background-color: #918151;
 }
 
 .site-header .navbar-nav .nav-link {
@@ -81,4 +81,52 @@ a.article-title:hover {
 
 .account-heading {
   font-size: 2.5rem;
+}
+
+.background-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.background-image {
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  object-fit: cover;
+  opacity: 0.75;
+  /* Photo by Jimmy Dean Unsplash */
+
+}
+
+.brown_button{
+  border-color: #918151;
+  background-color: #918151;
+  color: white;
+}
+
+.brown_button:hover {
+  color: #918151;
+  background-color: white;
+  border-color: #918151;
+}
+
+.brown_button_white_bg{
+  border-color: #918151;
+  background-color: white;
+  color: #918151;
+}
+
+.brown_button_white_bg:hover{
+  border-color: #918151;
+  background-color: #918151;
+  color: white;
+}
+
+.my-custom-alert {
+  background-color: #918151;
+  color: white;
 }

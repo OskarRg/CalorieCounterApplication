@@ -1,26 +1,84 @@
-
-
-{% extends "food_counter/base.html" %}
+{% extends "food_counter/list_base.html" %}
 {% block content %}
 {% load crispy_forms_filters %}
 {% load crispy_forms_tags %}
-<h1>Meal List!</h1>
+<div class="container">
+  <div class="row justify-content-center mt-3"> <!-- Zmniejszono margines z mt-5 na mt-3 -->
+    <div class="col-md-6">
+      <div class="bg-transparent text-center" > <!-- Dodano styl obramowania -->
+        <div class="card-body">
+          <h1 style="background: rgba(255, 255, 255, 0.55);" >Meal List!</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <form method="GET" action="{% url 'meal-list' %}">
   {{ form|crispy }}
-  <button type="submit">Search</button>
+  <button class="btn btn-info mb-2 brown_button" type="submit">Search</button>
 </form>
-    {% for meal in meals %}
-        <article class="media content-section">
-          <div class="media-body">
-            <h2> {{ meal.meal_name }}</h2> <h3>{{ meal.calories }} kcal</h3>
-            <p class="article-content"> P: {{ meal.protein }} F: {{ meal.fat }} C: {{ meal.carbs }}</p>
-              <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'meal-update' meal.id %}">Update</a>
-              <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'meal-delete' meal.id %}">Delete</a>
-            <p>Added by {{ meal.user }} - usuniemy to żeby nie było widać kto dodał</p>
+<div class="container">
+  <div class="row">
+    {% for category in categories %}
+      <div class="col-md-4">
+        <div class="accordion" id="mealCategoryAccordion">
+          <h3 class="alert alert-secondary collapsed" data-toggle="collapse" data-target="#category{{ category.id }}" aria-expanded="false">{{ category.name }}</h3>
+          <div id="category{{ category.id }}" class="collapse show">
+            <ul class="list-group">
+              {% for meal in meals %}
+                {% if meal.category.id == category.id %}
+                  <li class="list-group-item">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <h4>{{ meal.meal_name }}</h4>
+                        <h5>{{ meal.grams }} g</h5>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-7">
+                        <h4>{{ meal.calories|floatformat:0 }} kcal</h4>
+                        <p>
+                          P: <span style="color: blue;">{{ meal.protein|floatformat:1 }}</span>
+                          F: <span style="color: darkorange;">{{ meal.fat|floatformat:1 }}</span>
+                          C: <span style="color: purple;">{{ meal.carbs|floatformat:1 }}</span>
+                        </p>
+                        <a class="btn btn-secondary btn-sm mt-1 mb-1 brown_button_white_bg" href="{% url 'meal-update' meal.id %}">Update</a>
+                        <a class="btn btn-outline-danger btn-sm mt-1 mb-1" href="{% url 'meal-delete' meal.id %}">Delete</a>
+                      </div>
+                      <div class="col-md-5">
+                        <canvas id="chart-{{ meal.id }}" style="max-width: 100px; max-height: 100px;"></canvas>
+                        <script>
+                          var ctx = document.getElementById("chart-{{ meal.id }}").getContext('2d');
+                          var data = {
+                            labels: ['Protein', 'Fat', 'Carbs'],
+                            datasets: [{
+                              data: [{{ meal.protein }}, {{ meal.fat }}, {{ meal.carbs }}],
+                              backgroundColor: ['blue', 'darkorange', 'purple'],
+                            }]
+                          };
+                          var options = {
+                            plugins: {
+                              legend: {
+                                display: false
+                              }
+                            }
+                          };
+                          var myPieChart = new Chart(ctx, {
+                            type: 'pie',
+                            data: data,
+                            options: options
+                          });
+                        </script>
+                      </div>
+                    </div>
+                  </li>
+                {% endif %}
+              {% endfor %}
+            </ul>
           </div>
-        </article>
+        </div>
+      </div>
     {% endfor %}
-
+  </div>
+</div>
 {% endblock content %}
-
-

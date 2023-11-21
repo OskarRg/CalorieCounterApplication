@@ -5,13 +5,12 @@
             {% csrf_token %}
             <fieldset class="form-group">
                 <legend class="border-bottom mb-4">Delete Meal</legend>
-                <h2>Are you sure you want to delete the meal {{ object.date }} that you added ?</h2>
+                <h2>Are you sure you want to delete the meal {{ object.meal_name }} that you added ?</h2>
             </fieldset>
             <div class="form-group">
                 <button class="btn btn-outline-danger" type="submit">Delete</button>
-                <a class="btn btn-outline-secondary" href="{% url 'meal-list' %}">Cancel</a>
+                <a class="btn btn-outline-secondary brown_button_white_bg" href="{% url 'meal-list' %}">Cancel</a>
             </div>
         </form>
-
     </div>
 {% endblock content %}
