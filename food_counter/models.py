@@ -29,7 +29,7 @@ class Meal(models.Model):
     fat = models.FloatField()
     carbs = models.FloatField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    category = models.ForeignKey(Category, on_delete=models.SET_DEFAULT, default=1)
+    category = models.ForeignKey(Category, on_delete=models.SET_DEFAULT, null=True, default=1)
     grams = models.PositiveIntegerField(default=100)
     product = models.ForeignKey(Products, on_delete=models.CASCADE, blank=False)
 
