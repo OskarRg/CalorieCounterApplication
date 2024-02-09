@@ -12,3 +12,4 @@
 
 ![image](https://github.com/OskarRg/Bazy-Danych/assets/116189254/23d810e5-110f-47a8-bffa-432687ecdd17)
 
+<h4 align="center"> This project was my first experience with django framework. Looking back at this project, I see many overcomplicated solutions and oversights that I made as a complete beginner, thanks to which I can see my gradual progress.</h4>
