@@ -1,5 +1,5 @@
 <h1 align="center">📆Calorie Counter🍕</h1>
-<h2 align="center">A Simple Web Application that let's you track your daily calorie intake</h2>
+<h2 align="center">A simple web application that let's you track your daily calorie intake</h2>
 
 <h3 align="center">As a logged in user you can create your own meals with your products or add new products to the open database.</h3>
 
